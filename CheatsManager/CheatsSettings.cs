@@ -9,6 +9,8 @@ public class CheatsSettings : ScriptableObject
 
     [SerializeField] private Cheat[] _cheats = new Cheat[0];
 
+    public Cheat[] Cheats { get => _cheats; }
+
     public static CheatsSettings GetOrCreateSettings()
     {
         CheatsSettings settings = GetSettings();
