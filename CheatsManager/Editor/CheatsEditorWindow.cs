@@ -7,7 +7,7 @@ using UnityEngine;
 namespace TF.CheatsEditor
 {
     public class CheatsEditorWindow : EditorWindow
-    {            
+    {
         [MenuItem("Window/Cheats Editor")]
         static void Init()
         {
@@ -27,15 +27,20 @@ namespace TF.CheatsEditor
         {
             var cheatsSettings = CheatsSettings.GetOrCreateSettings();
 
-            EditorGUI.indentLevel++;
-
-            for (int i = 0; i < cheatsSettings.Cheats.Length; i++)
+            if (cheatsSettings.Cheats.Length == 0)
             {
-                var cheat = cheatsSettings.Cheats[i];
-                DrawCheat(cheat);
+                // warn the user that there is no cheat
+                DrawCheatsEmptyLabel();
             }
+            else
+            {
+                EditorGUI.indentLevel++;
 
-            EditorGUI.indentLevel--;
+                foreach (var cheat in cheatsSettings.Cheats)
+                    DrawCheat(cheat);
+
+                EditorGUI.indentLevel--;
+            }
         }
 
         void DrawCheat(Cheat cheat)
@@ -43,7 +48,8 @@ namespace TF.CheatsEditor
             EditorGUILayout.BeginHorizontal();
 
             // draw prefix
-            EditorGUILayout.PrefixLabel(cheat.id);
+            string prefix = string.IsNullOrWhiteSpace(cheat.id) ? "ERROR: No cheat ID." : cheat.id;
+            EditorGUILayout.PrefixLabel(prefix);
 
             // draw value
             switch (cheat.type)
@@ -62,6 +68,11 @@ namespace TF.CheatsEditor
             }
 
             EditorGUILayout.EndHorizontal();
+        }
+
+        void DrawCheatsEmptyLabel()
+        {
+            GUILayout.Label("There is no cheats in ProjectSettings. Please call your project's administrator.");
         }
     }
 }
