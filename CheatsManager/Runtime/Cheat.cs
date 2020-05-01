@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Cheat
+namespace TF.Cheats
 {
-    public string id;
-    public CheatType type;
+    [System.Serializable]
+    public class Cheat
+    {
+        public string id;
+        public CheatType type;
+    }
 }

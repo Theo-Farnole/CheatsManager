@@ -3,35 +3,38 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class CheatsSettings : ScriptableObject
+namespace TF.Cheats
 {
-    public static readonly string cheatsSettingsPath = "Assets/Editor/CheatsSettings.asset";
-
-    [SerializeField] private Cheat[] _cheats = new Cheat[0];
-
-    public Cheat[] Cheats { get => _cheats; }
-
-    public static CheatsSettings GetOrCreateSettings()
+    public class CheatsSettings : ScriptableObject
     {
-        CheatsSettings settings = GetSettings();
+        public static readonly string cheatsSettingsPath = "Assets/Editor/CheatsSettings.asset";
 
-        if (settings == null)
-            settings = CreateCheatsSettings(out settings, cheatsSettingsPath);
+        [SerializeField] private Cheat[] _cheats = new Cheat[0];
 
-        return settings;
-    }
+        public Cheat[] Cheats { get => _cheats; }
 
-    static CheatsSettings GetSettings()
-    {
-        return AssetDatabase.LoadAssetAtPath<CheatsSettings>(cheatsSettingsPath);
-    }
+        public static CheatsSettings GetOrCreateSettings()
+        {
+            CheatsSettings settings = GetSettings();
 
-    static CheatsSettings CreateCheatsSettings(out CheatsSettings settings, string createAssetPath)
-    {
-        settings = ScriptableObject.CreateInstance<CheatsSettings>();
-        AssetDatabase.CreateAsset(settings, createAssetPath);
-        AssetDatabase.SaveAssets();
+            if (settings == null)
+                settings = CreateCheatsSettings(out settings, cheatsSettingsPath);
 
-        return settings;
+            return settings;
+        }
+
+        static CheatsSettings GetSettings()
+        {
+            return AssetDatabase.LoadAssetAtPath<CheatsSettings>(cheatsSettingsPath);
+        }
+
+        static CheatsSettings CreateCheatsSettings(out CheatsSettings settings, string createAssetPath)
+        {
+            settings = ScriptableObject.CreateInstance<CheatsSettings>();
+            AssetDatabase.CreateAsset(settings, createAssetPath);
+            AssetDatabase.SaveAssets();
+
+            return settings;
+        }
     }
 }

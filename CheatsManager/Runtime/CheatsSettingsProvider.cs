@@ -3,48 +3,51 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public static class CheatsSettingsProvider
+namespace TF.Cheats
 {
-    public static readonly string cheatsSettingsPath = "Project/Cheats";
-    public static readonly string cheatsSettingsLabel = "Cheats";
-
-    private static Editor _cheatsSettingsEditor = null;
-
-    private static Editor CheatsSettingsEditor
+    public static class CheatsSettingsProvider
     {
-        get
-        {
-            if (_cheatsSettingsEditor == null)
-                CreateCheatsSettingsEditor(out _cheatsSettingsEditor);
+        public static readonly string cheatsSettingsPath = "Project/Cheats";
+        public static readonly string cheatsSettingsLabel = "Cheats";
 
-            return _cheatsSettingsEditor;
+        private static Editor _cheatsSettingsEditor = null;
+
+        private static Editor CheatsSettingsEditor
+        {
+            get
+            {
+                if (_cheatsSettingsEditor == null)
+                    CreateCheatsSettingsEditor(out _cheatsSettingsEditor);
+
+                return _cheatsSettingsEditor;
+            }
         }
-    }
 
 
-    [SettingsProvider]
-    public static SettingsProvider CreateCheatsSettingsProvider()
-    {
-        SettingsProvider provider = new SettingsProvider(cheatsSettingsPath, SettingsScope.Project)
+        [SettingsProvider]
+        public static SettingsProvider CreateCheatsSettingsProvider()
         {
-            label = cheatsSettingsLabel,
-            guiHandler = DrawCheatsSettingsProvider
-        };
+            SettingsProvider provider = new SettingsProvider(cheatsSettingsPath, SettingsScope.Project)
+            {
+                label = cheatsSettingsLabel,
+                guiHandler = DrawCheatsSettingsProvider
+            };
 
-        return provider;
-    }
+            return provider;
+        }
 
-    private static void DrawCheatsSettingsProvider(string searchContext)
-    {        
-        CheatsSettingsEditor.OnInspectorGUI();
-    }
+        private static void DrawCheatsSettingsProvider(string searchContext)
+        {
+            CheatsSettingsEditor.OnInspectorGUI();
+        }
 
-    private static void CreateCheatsSettingsEditor(out Editor editor)
-    {
-        // get cheatsSettings
-        CheatsSettings cheatsSettings = CheatsSettings.GetOrCreateSettings();
-        var serializedObjectCheatsSettings = new SerializedObject(cheatsSettings);
-                
-        editor = Editor.CreateEditor(cheatsSettings);        
+        private static void CreateCheatsSettingsEditor(out Editor editor)
+        {
+            // get cheatsSettings
+            CheatsSettings cheatsSettings = CheatsSettings.GetOrCreateSettings();
+            var serializedObjectCheatsSettings = new SerializedObject(cheatsSettings);
+
+            editor = Editor.CreateEditor(cheatsSettings);
+        }
     }
 }
