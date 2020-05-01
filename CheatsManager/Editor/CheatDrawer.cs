@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TF.Cheats;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace TF.Cheats.Editor
+namespace TF.CheatsEditor
 {
     [CustomPropertyDrawer(typeof(Cheat))]
     public class CheatDrawer : PropertyDrawer

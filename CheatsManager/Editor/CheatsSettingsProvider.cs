@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TF.Cheats;
 using UnityEditor;
 using UnityEngine;
 
-namespace TF.Cheats
+namespace TF.CheatsEditor
 {
     public static class CheatsSettingsProvider
     {
