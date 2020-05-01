@@ -34,13 +34,18 @@ public class CheatsEditorWindow : EditorWindow
 
     void DrawCheat(Cheat cheat)
     {
+
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PrefixLabel(cheat.id);
 
         switch (cheat.type)
         {   
             case CheatType.Boolean:
-                EditorPrefs.SetBool(cheat.id, EditorGUILayout.Toggle(EditorPrefs.GetBool(cheat.id)));
+                bool defaultValue = PlayerPrefs.GetFloat(cheat.id) == 1;
+
+                bool input = EditorGUILayout.Toggle(defaultValue);
+
+                PlayerPrefs.SetFloat(cheat.id, input ? 1 : 0);
                 break;
 
             default:
