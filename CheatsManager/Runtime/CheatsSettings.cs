@@ -7,7 +7,8 @@ namespace TF.Cheats
 {
     public class CheatsSettings : ScriptableObject
     {
-        public static readonly string cheatsSettingsPath = "Assets/Editor/CheatsSettings.asset";
+        public static readonly string cheatsSettingsFilename = "CheatsSettings";
+        public static readonly string cheatsSettingsPath = "Assets/Resources/";
 
         [SerializeField] private Cheat[] _cheats = new Cheat[0];
 
@@ -18,23 +19,29 @@ namespace TF.Cheats
             CheatsSettings settings = GetSettings();
 
             if (settings == null)
-                settings = CreateCheatsSettings(out settings, cheatsSettingsPath);
+                CreateCheatsSettings(out settings, cheatsSettingsPath + cheatsSettingsFilename);
 
             return settings;
         }
 
         static CheatsSettings GetSettings()
         {
-            return AssetDatabase.LoadAssetAtPath<CheatsSettings>(cheatsSettingsPath);
+            return Resources.Load<CheatsSettings>(cheatsSettingsFilename);
         }
 
-        static CheatsSettings CreateCheatsSettings(out CheatsSettings settings, string createAssetPath)
+        static void CreateCheatsSettings(out CheatsSettings settings, string createAssetPath)
         {
+            Debug.Log("<color=magenta>CheatsSettings # </color> Create CheatsSettings file at " + cheatsSettingsPath);
+
             settings = ScriptableObject.CreateInstance<CheatsSettings>();
-            AssetDatabase.CreateAsset(settings, createAssetPath);
+
+            if (!AssetDatabase.IsValidFolder("Assets/Resources"))
+                AssetDatabase.CreateFolder("Assets", "Resources");
+
+            AssetDatabase.CreateAsset(settings, createAssetPath + ".asset");
             AssetDatabase.SaveAssets();
 
-            return settings;
+            return;
         }
     }
 }
