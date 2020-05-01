@@ -19,21 +19,32 @@ namespace TF.Cheats.Editor
         {
             GUILayout.Label("Cheats Editor", EditorStyles.boldLabel);
 
+            DrawCheats();
+        }
+
+        void DrawCheats()
+        {
             var cheatsSettings = CheatsSettings.GetOrCreateSettings();
+
+            EditorGUI.indentLevel++;
 
             for (int i = 0; i < cheatsSettings.Cheats.Length; i++)
             {
                 var cheat = cheatsSettings.Cheats[i];
                 DrawCheat(cheat);
             }
+
+            EditorGUI.indentLevel--;
         }
 
         void DrawCheat(Cheat cheat)
         {
-
             EditorGUILayout.BeginHorizontal();
+
+            // draw prefix
             EditorGUILayout.PrefixLabel(cheat.id);
 
+            // draw value
             switch (cheat.type)
             {
                 case CheatType.Boolean:
@@ -48,6 +59,7 @@ namespace TF.Cheats.Editor
                     Debug.LogError("Missing a value in DrawCheat(). Call your coder.");
                     break;
             }
+
             EditorGUILayout.EndHorizontal();
         }
     }
