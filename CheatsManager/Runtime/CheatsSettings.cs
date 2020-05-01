@@ -19,8 +19,11 @@ namespace TF.Cheats
             CheatsSettings settings = GetSettings();
 
             if (settings == null)
+#if UNITY_EDITOR
                 CreateCheatsSettings(out settings, cheatsSettingsPath + cheatsSettingsFilename);
-
+#else            
+                Debug.LogErrorFormat("There is no cheats settings. Watch your Resources folder please.");
+#endif
             return settings;
         }
 
@@ -29,6 +32,7 @@ namespace TF.Cheats
             return Resources.Load<CheatsSettings>(cheatsSettingsFilename);
         }
 
+#if UNITY_EDITOR
         static void CreateCheatsSettings(out CheatsSettings settings, string createAssetPath)
         {
             Debug.Log("<color=magenta>CheatsSettings # </color> Create CheatsSettings file at " + cheatsSettingsPath);
@@ -43,5 +47,6 @@ namespace TF.Cheats
 
             return;
         }
+#endif
     }
 }
