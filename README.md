@@ -1,6 +1,6 @@
 # Unity Cheats Manager
 
-Make easier creation of cheats in Unity.
+Make creation of cheats in Unity easier.
 
 ## Getting Started
 
@@ -34,7 +34,7 @@ void CheatsManager_OnCheatUpdated(string key, CheatType)
 }
 ```
 
-## Authors
+## Author
 
 * **Theo Farnole**  - [My Portfolio](tfarnole.me/)
 
