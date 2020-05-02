@@ -54,12 +54,9 @@ namespace TF.CheatsEditor
             // draw value
             switch (cheat.type)
             {
-                case CheatType.Boolean:
-                    bool defaultValue = PlayerPrefs.GetFloat(cheat.id) == 1;
-
-                    bool input = EditorGUILayout.Toggle(defaultValue);
-
-                    PlayerPrefs.SetFloat(cheat.id, input ? 1 : 0);
+                case CheatType.Boolean:                    
+                    bool input = EditorGUILayout.Toggle(CheatsManager.GetBool(cheat));
+                    CheatsManager.SetBool(cheat, input);
                     break;
 
                 default:
