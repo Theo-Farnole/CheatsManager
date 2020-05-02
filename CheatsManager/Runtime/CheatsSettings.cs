@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace TF.Cheats
 
         public Cheat[] Cheats { get => _cheats; }
 
+        #region Get or Create Settings
         public static CheatsSettings GetOrCreateSettings()
         {
             CheatsSettings settings = GetSettings();
@@ -48,5 +50,28 @@ namespace TF.Cheats
             return;
         }
 #endif
+        #endregion
+
+        #region Getter
+        public bool TryGetCheatType(string key, out CheatType cheatType)
+        {
+            Cheat cheat = _cheats.Where(x => x.id == key).FirstOrDefault();
+
+            if (cheat == null)
+            {
+                // abort
+                cheatType = CheatType.Boolean; // default cheat type
+                return false;
+            }
+
+            cheatType = cheat.type;
+            return true;
+        }
+
+        public bool DoCheatKeyExist(string key)
+        {
+            return _cheats.Select(x => x.id).Contains(key);
+        }
+        #endregion
     }
 }
