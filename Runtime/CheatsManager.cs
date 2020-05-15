@@ -9,7 +9,7 @@ namespace TF.Cheats
 
     public static class CheatsManager
     {
-        public static readonly string playerPrefsPrefix = "CHEATS_";
+        private static readonly string playerPrefsPrefix = "CHEATS_";
 
         public static event OnCheatUpdated OnCheatChanged;
 
