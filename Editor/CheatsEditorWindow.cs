@@ -8,12 +8,24 @@ namespace TF.CheatsEditor
 {
     public class CheatsEditorWindow : EditorWindow
     {
+        #region Methods
         [MenuItem("Window/Cheats Editor")]
         static void Init()
         {
             // Get existing open window or if none, make a new one:
-            CheatsEditorWindow window = (CheatsEditorWindow)EditorWindow.GetWindow(typeof(CheatsEditorWindow));
+            CheatsEditorWindow window = (CheatsEditorWindow)GetWindow(typeof(CheatsEditorWindow));
             window.Show();
+        }
+
+        #region EditorWindow Callbacks
+        void OnEnable()
+        {
+            CheatsManager.OnCheatChanged += CheatsManager_OnCheatChanged;   
+        }
+
+        void OnDisable()
+        {
+            CheatsManager.OnCheatChanged -= CheatsManager_OnCheatChanged;
         }
 
         void OnGUI()
@@ -22,7 +34,16 @@ namespace TF.CheatsEditor
 
             DrawCheats();
         }
+        #endregion
 
+        #region Events Handlers
+        private void CheatsManager_OnCheatChanged(string key, CheatType cheatType)
+        {
+            Repaint();
+        }
+        #endregion
+
+        #region Draw Methods
         void DrawCheats()
         {
             var cheatsSettings = CheatsSettings.GetOrCreateSettings();
@@ -71,5 +92,7 @@ namespace TF.CheatsEditor
         {
             GUILayout.Label("There is no cheats in ProjectSettings. Please call your project's administrator.");
         }
+        #endregion
+        #endregion
     }
 }
