@@ -14,6 +14,18 @@ namespace TF.Cheats
         public static event OnCheatUpdated OnCheatChanged;
 
         #region Setter methods
+        public static void ToggleBool(string key)
+        {
+            // do cheat key exist
+            if (!CheatsSettings.GetOrCreateSettings().DoCheatKeyExist(key))
+            {
+                Debug.LogErrorFormat("Key {0} doesn't exist in CheatsSettings. Aborting method.", key);
+                return;
+            }
+
+            SetBool(key, !GetBool(key));
+        }
+
         public static void SetBool(Cheat cheat, bool value)
         {
             if (cheat == null)
